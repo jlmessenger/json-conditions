@@ -1,0 +1,15 @@
+{
+  "name": "conditions",
+  "version": "0.1.0",
+  "description": "Logic conditions",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": "Jeremy Messenger",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "ajv": "^5.1.5",
+    "js-yaml": "^3.8.4"
+  }
+}

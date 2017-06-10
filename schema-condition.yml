@@ -1,0 +1,92 @@
+$schema: http://json-schema.org/draft-06/schema#
+title: Condition
+type: object
+patternProperties:
+  '[\w-]+':
+    type: object
+    oneOf:
+      - $ref: '#/definitions/fnEquals'
+      - $ref: '#/definitions/fnAnd'
+      - $ref: '#/definitions/fnOr'
+      - $ref: '#/definitions/fnNot'
+definitions:
+  fnAnd:
+    title: And
+    type: object
+    required:
+      - and
+    properties:
+      and:
+        type: array
+        minItems: 2
+        items:
+          type: object
+          oneOf:
+            - $ref: '#/definitions/fnEquals'
+            - $ref: '#/definitions/fnAnd'
+            - $ref: '#/definitions/fnOr'
+            - $ref: '#/definitions/fnNot'
+  fnOr:
+    title: Or
+    type: object
+    required:
+      - or
+    properties:
+      or:
+        type: array
+        minItems: 2
+        items:
+          type: object
+          oneOf:
+            - $ref: '#/definitions/fnEquals'
+            - $ref: '#/definitions/fnAnd'
+            - $ref: '#/definitions/fnOr'
+            - $ref: '#/definitions/fnNot'
+  fnNot:
+    title: Not
+    type: object
+    required:
+      - not
+    properties:
+      not:
+        type: object
+        oneOf:
+          - $ref: '#/definitions/fnEquals'
+          - $ref: '#/definitions/fnAnd'
+          - $ref: '#/definitions/fnOr'
+          - $ref: '#/definitions/fnNot'
+  fnEquals:
+    title: Equals
+    type: object
+    required:
+      - equals
+    properties:
+      equals:
+        type: array
+        minItems: 2
+        maxItems: 2
+        items:
+          type: object
+          oneOf:
+            - $ref: '#/definitions/literalValue'
+            - $ref: '#/definitions/fieldReference'
+  literalValue:
+    title: Value
+    type: object
+    required:
+      - value
+    properties:
+      value:
+        type:
+          - string
+          - number
+          - boolean
+          - 'null'
+  fieldReference:
+    title: Ref
+    type: object
+    required:
+      - field
+    properties:
+      field:
+        type: string
