@@ -4,7 +4,7 @@ function searchThemAll(fieldCollector, conditions) {
   });
 }
 const searchMethods = {
-  equals(fieldCollector, [valueA, valueB]) {
+  equal(fieldCollector, [valueA, valueB]) {
     search(fieldCollector, valueA);
     search(fieldCollector, valueB);
   },

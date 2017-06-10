@@ -22,11 +22,11 @@ addTest('List Fields', () => {
   const fields = listFields({
     andCond: {
       and: [
-        {equals: [
+        {equal: [
           {field: 'one'},
           {field: 'two'}
         ]},
-        {equals: [
+        {equal: [
           {field: 'three'},
           {value: 3}
         ]}
@@ -34,24 +34,24 @@ addTest('List Fields', () => {
     },
     orCond: {
       or: [
-        {equals: [
+        {equal: [
           {field: 'one'},
           {field: 'two'}
         ]},
-        {equals: [
+        {equal: [
           {field: 'three'},
           {value: 3}
         ]}
       ]
     },
     notCond: {
-      not: {equals: [
+      not: {equal: [
         {field: 'four'},
         {field: 'three'}
       ]}
     },
     equalCond: {
-      equals: [
+      equal: [
         {field: 'five'},
         {value: 'val'}
       ]
@@ -59,16 +59,16 @@ addTest('List Fields', () => {
     mixedCond: {
       or: [
         {and: [
-          {not: {equals: [
+          {not: {equal: [
               {field: 'six'},
               {value: 6}
           ]}},
-          {equals: [
+          {equal: [
             {field: 'seven'},
             {value: 7}
           ]}
         ]},
-        {equals: [
+        {equal: [
           {field: 'five'},
           {value: 5}
         ]}
@@ -81,13 +81,13 @@ addTest('List Fields', () => {
 addTest('Basic equal', () => {
   const out = evaluate(testResolver, {
     equalTrue: {
-      equals: [
+      equal: [
         {field: 'fieldFalse'},
         {value: false}
       ]
     },
     equalFalse: {
-      equals: [
+      equal: [
         {field: 'fieldHello'},
         {value: null}
       ]
@@ -99,23 +99,23 @@ addTest('Basic and', () => {
   const out = evaluate(testResolver, {
     andTrue: {
       and: [
-        {equals: [
+        {equal: [
           {field: 'fieldTrue'},
           {value: true}
         ]},
-        {equals: [
+        {equal: [
           {field: 'fieldFalse'},
           {value: false}
         ]},
-        {equals: [
+        {equal: [
           {field: 'fieldNull'},
           {value: null}
         ]},
-        {equals: [
+        {equal: [
           {field: 'fieldHello'},
           {value: 'hello'}
         ]},
-        {equals: [
+        {equal: [
           {field: 'fieldTen'},
           {value: 10}
         ]}
@@ -123,11 +123,11 @@ addTest('Basic and', () => {
     },
     andFalse: {
       and: [
-        {equals: [
+        {equal: [
           {field: 'fieldTrue'},
           {value: true}
         ]},
-        {equals: [
+        {equal: [
           {field: 'fieldHello'},
           {value: 'wrong'}
         ]}
@@ -140,23 +140,23 @@ addTest('Basic or', () => {
   const out = evaluate(testResolver, {
     orTrue: {
       or: [
-        {equals: [
+        {equal: [
           {field: 'fieldTrue'},
           {value: 'wrong'}
         ]},
-        {equals: [
+        {equal: [
           {field: 'fieldFalse'},
           {value: 'wrong'}
         ]},
-        {equals: [
+        {equal: [
           {field: 'fieldNull'},
           {value: 'wrong'}
         ]},
-        {equals: [
+        {equal: [
           {field: 'fieldHello'},
           {value: 'hello'}
         ]},
-        {equals: [
+        {equal: [
           {field: 'fieldTen'},
           {value: 10}
         ]}
@@ -164,11 +164,11 @@ addTest('Basic or', () => {
     },
     orFalse: {
       or: [
-        {equals: [
+        {equal: [
           {field: 'fieldTrue'},
           {value: 'wrong'}
         ]},
-        {equals: [
+        {equal: [
           {field: 'fieldHello'},
           {value: 'wrong'}
         ]}
@@ -181,7 +181,7 @@ addTest('Basic not', () => {
   const out = evaluate(testResolver, {
     notTrue: {
       not: {
-        equals: [
+        equal: [
           {field: 'fieldTrue'},
           {value: false}
         ]
@@ -189,7 +189,7 @@ addTest('Basic not', () => {
     },
     notFalse: {
       not: {
-        equals: [
+        equal: [
           {field: 'fieldTrue'},
           {value: true}
         ]
@@ -203,17 +203,17 @@ addTest('Nested conditions', () => {
     orAndNotTrue: {
       or: [
         {and: [
-          {equals: [
+          {equal: [
             {field: 'fieldTrue'},
             {value: false}
           ]},
-          {equals: [
+          {equal: [
             {field: 'fieldTrue'},
             {value: false}
           ]}
         ]},
         {not: {
-          equals: [
+          equal: [
             {field: 'fieldTrue'},
             {value: false}
           ]
@@ -223,17 +223,17 @@ addTest('Nested conditions', () => {
     andOrNotTrue: {
       and: [
         {or: [
-          {equals: [
+          {equal: [
             {field: 'fieldTrue'},
             {value: false}
           ]},
-          {equals: [
+          {equal: [
             {field: 'fieldTrue'},
             {value: true}
           ]}
         ]},
         {not: {
-          equals: [
+          equal: [
             {field: 'fieldTrue'},
             {value: false}
           ]
@@ -248,7 +248,7 @@ addTest('Validate minItems and', () => {
     evaluate(testResolver, {
       invalidAnd: {
         and: [
-          {equals: [
+          {equal: [
             {field: 'fieldFalse'},
             {value: false}
           ]}
@@ -265,7 +265,7 @@ addTest('Validate minItems or', () => {
     evaluate(testResolver, {
       invalidOr: {
         or: [
-          {equals: [
+          {equal: [
             {field: 'fieldFalse'},
             {value: false}
           ]}
@@ -281,21 +281,21 @@ addTest('Validate minItems equal', () => {
   assert.throws(() => {
     evaluate(testResolver, {
       invalidEqual: {
-        equals: [
+        equal: [
           {field: 'fieldFalse'}
         ]
       }
     });
   }, (err) => {
     const minTwo = err.errors.find(({keyword}) => keyword === 'minItems');
-    return minTwo && minTwo.dataPath === '[\'invalidEqual\'].equals' && minTwo.params.limit === 2;
+    return minTwo && minTwo.dataPath === '[\'invalidEqual\'].equal' && minTwo.params.limit === 2;
   })
 });
 addTest('Validate maxItems equal', () => {
   assert.throws(() => {
     evaluate(testResolver, {
       invalidEqual: {
-        equals: [
+        equal: [
           {field: 'fieldFalse'},
           {value: false},
           {field: 'fieldTrue'}
@@ -304,20 +304,20 @@ addTest('Validate maxItems equal', () => {
     });
   }, (err) => {
     const maxTwo = err.errors.find(({keyword}) => keyword === 'maxItems');
-    return maxTwo && maxTwo.dataPath === '[\'invalidEqual\'].equals' && maxTwo.params.limit === 2;
+    return maxTwo && maxTwo.dataPath === '[\'invalidEqual\'].equal' && maxTwo.params.limit === 2;
   })
 });
 addTest('Validate badparam equal', () => {
   assert.throws(() => {
     evaluate(testResolver, {
       invalidEqual: {
-        equals: [
+        equal: [
           {and: [
-            {equals: [
+            {equal: [
               {field: 'fieldTrue'},
               {value: true}
             ]},
-            {equals: [
+            {equal: [
               {field: 'fieldTrue'},
               {value: true}
             ]}
@@ -328,7 +328,7 @@ addTest('Validate badparam equal', () => {
     });
   }, (err) => {
     const notOneOf = err.errors.find(({keyword}) => keyword === 'oneOf');
-    return notOneOf && notOneOf.dataPath === '[\'invalidEqual\'].equals[0]';
+    return notOneOf && notOneOf.dataPath === '[\'invalidEqual\'].equal[0]';
   })
 });
 addTest('Validate corrupt param', () => {
@@ -337,7 +337,7 @@ addTest('Validate corrupt param', () => {
       invalidParam: {
         and: [
           {bad: 'value'},
-          {equals: [
+          {equal: [
             {field: 'fieldTrue'},
             {value: true}
           ]}

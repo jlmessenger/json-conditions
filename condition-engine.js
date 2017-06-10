@@ -1,8 +1,8 @@
 const conditionMethods = {
-  equals(fieldResolver, [valueA, valueB]) {
+  equal(fieldResolver, [valueA, valueB]) {
     const a = execute(fieldResolver, valueA);
     const b = execute(fieldResolver, valueB);
-    //console.log('  equals:', a === b);
+    //console.log('  equal:', a === b);
     return a === b;
   },
   and(fieldResolver, conditions) {

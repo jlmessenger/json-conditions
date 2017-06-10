@@ -9,18 +9,18 @@ const conditions = require('json-conditions');
 const syntax = {
   doILikeConditions: {
     not: {
-      equals: [
+      equal: [
         {field: oneVariable},
         {field: anotherVariable}
       ]}
   },
   doILoveConditions: {
     and: [
-      {equals: [
+      {equal: [
         {field: someStringValue},
         {value: 'literal'}
       ]},
-      {equals: [
+      {equal: [
         {field: someBooleanValue},
         {value: true}
       ]}
@@ -68,11 +68,11 @@ const conditions = require('json-conditions');
 const fieldNames = conditions.listFields({
   firstCond: {
     and: [
-      {equals: [
+      {equal: [
         {field: 'fieldOne'},
         {field: 'fieldTwo'}
       ]},
-      {equals: [
+      {equal: [
         {field: 'fieldThree'},
         {value: 3}
       ]}
@@ -80,11 +80,11 @@ const fieldNames = conditions.listFields({
   },
   secondCond: {
     or: [
-      {equals: [
+      {equal: [
         {field: 'fieldThree'},
         {value: 3}
       ]},
-      {equals: [
+      {equal: [
         {field: 'fieldFour'},
         {value: 4}
       ]}
@@ -111,8 +111,8 @@ conditions.validate({
 ```
 
 ## Condition Syntax
-### `equals`
-`{equals: [valueA, valueB]}`
+### `equal`
+`{equal: [valueA, valueB]}`
 
 * Only accepts two values
 * Each value can be a literal value or a field value
@@ -127,12 +127,12 @@ conditions.validate({
 #### Examples
 ```js
 // ensure two fields exactly match
-{equals: [
+{equal: [
   {field: 'firstField'},
   {field: 'secondField'}
 ]}
 // ensure a field matches a literal value
-{equals: [
+{equal: [
   {field: 'firstField'},
   {value: 'literal-value'}
 ]}
@@ -150,11 +150,11 @@ conditions.validate({
 // true if the two fields exactly match
 // AND the third field equals 'test'
 {and: [
-  {equals: [
+  {equal: [
     {field: 'firstField'},
     {field: 'secondField'}
   ]},
-  {equals: [
+  {equal: [
     {field: 'thirdField'},
     {value: 'test'}
   ]},
@@ -173,11 +173,11 @@ conditions.validate({
 // true if the two fields exactly match
 // OR the third field equals 'test'
 {or: [
-  {equals: [
+  {equal: [
     {field: 'firstField'},
     {field: 'secondField'}
   ]},
-  {equals: [
+  {equal: [
     {field: 'thirdField'},
     {value: 'test'}
   ]},
@@ -195,7 +195,7 @@ conditions.validate({
 ```js
 // false if both fields exactly match
 // true if the fields do not match
-{not: {equals: [
+{not: {equal: [
   {field: 'firstField'},
   {field: 'secondField'}
 ]}}

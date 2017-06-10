@@ -5,7 +5,7 @@ patternProperties:
   '[\w-]+':
     type: object
     oneOf:
-      - $ref: '#/definitions/fnEquals'
+      - $ref: '#/definitions/fnEqual'
       - $ref: '#/definitions/fnAnd'
       - $ref: '#/definitions/fnOr'
       - $ref: '#/definitions/fnNot'
@@ -22,7 +22,7 @@ definitions:
         items:
           type: object
           oneOf:
-            - $ref: '#/definitions/fnEquals'
+            - $ref: '#/definitions/fnEqual'
             - $ref: '#/definitions/fnAnd'
             - $ref: '#/definitions/fnOr'
             - $ref: '#/definitions/fnNot'
@@ -38,7 +38,7 @@ definitions:
         items:
           type: object
           oneOf:
-            - $ref: '#/definitions/fnEquals'
+            - $ref: '#/definitions/fnEqual'
             - $ref: '#/definitions/fnAnd'
             - $ref: '#/definitions/fnOr'
             - $ref: '#/definitions/fnNot'
@@ -51,17 +51,17 @@ definitions:
       not:
         type: object
         oneOf:
-          - $ref: '#/definitions/fnEquals'
+          - $ref: '#/definitions/fnEqual'
           - $ref: '#/definitions/fnAnd'
           - $ref: '#/definitions/fnOr'
           - $ref: '#/definitions/fnNot'
-  fnEquals:
-    title: Equals
+  fnEqual:
+    title: Equal
     type: object
     required:
-      - equals
+      - equal
     properties:
-      equals:
+      equal:
         type: array
         minItems: 2
         maxItems: 2
