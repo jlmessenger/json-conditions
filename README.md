@@ -56,7 +56,44 @@ Since your field values may be stored in a `Map`, a database ORM object or perha
 you must provide your own resolver function which returns the value for a given fieldName. The resolver function should match the signature:  
 `fieldResolverFn(fieldName) => field value as boolean | string | number | null`
 
-See the example above for a usage example.
+For a usage example see above.
+
+### `listFields(conditionsObj)`
+Finds all `{field: 'name'}` references, and returns an array with all found field names within any
+condition.
+
+```js
+const conditions = require('json-conditions');
+
+const fieldNames = conditions.listFields({
+  firstCond: {
+    and: [
+      {equals: [
+        {field: 'fieldOne'},
+        {field: 'fieldTwo'}
+      ]},
+      {equals: [
+        {field: 'fieldThree'},
+        {value: 3}
+      ]}
+    ]
+  },
+  secondCond: {
+    or: [
+      {equals: [
+        {field: 'fieldThree'},
+        {value: 3}
+      ]},
+      {equals: [
+        {field: 'fieldFour'},
+        {value: 4}
+      ]}
+    ]
+  }
+});
+
+console.log(fieldNames); // [ 'fieldOne', 'fieldTwo', 'fieldThree', 'fieldFour' ]
+```
 
 ### `validate(conditionsObj)`
 Validates the condition object, and throws an error if the syntax is not valid.
@@ -70,7 +107,7 @@ conditions.validate({
   invalidCondition: {
     and: []
   }
-}); // throws an error, because 'and' must have at least two parameters
+}); // throws an Error, because 'and' must have at least two parameters
 ```
 
 ## Condition Syntax

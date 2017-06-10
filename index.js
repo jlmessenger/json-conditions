@@ -4,6 +4,7 @@ const Ajv = require('ajv');
 const yaml = require('js-yaml');
 
 const conditionEngine = require('./condition-engine');
+const searchEngine = require('./search-engine');
 
 const schemaCondition = yaml.safeLoad(fs.readFileSync('schema-condition.yml', 'utf8'));
 
@@ -35,7 +36,23 @@ function evaluate(fieldResolver, conditionsObject) {
   }, {});
 }
 
+// builds a list of all fields used in any conditionals
+// conditionsObject - object that describes the conditional logic
+function listFields(conditionsObject) {
+  validate(conditionsObject);
+  const fieldNames = new Set();
+  const fieldCollector = (fieldName) => {
+    fieldNames.add(fieldName);
+  };
+  Object.keys(conditionsObject).forEach((key) => {
+    const conditionObject = conditionsObject[key];
+    searchEngine(fieldCollector, conditionObject);
+  });
+  return Array.from(fieldNames);
+}
+
 module.exports = {
   validate,
-  evaluate
+  evaluate,
+  listFields
 };

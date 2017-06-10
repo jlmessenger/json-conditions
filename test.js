@@ -1,6 +1,6 @@
 const assert = require('assert');
 
-const evaluate = require('./').evaluate;
+const {evaluate, listFields} = require('./');
 
 const tests = [];
 function addTest(name, fn) {
@@ -17,6 +17,66 @@ function testResolver(fieldName) {
   }
   throw new Error(`Unknown field: ${fieldName}`);
 }
+
+addTest('List Fields', () => {
+  const fields = listFields({
+    andCond: {
+      and: [
+        {equals: [
+          {field: 'one'},
+          {field: 'two'}
+        ]},
+        {equals: [
+          {field: 'three'},
+          {value: 3}
+        ]}
+      ]
+    },
+    orCond: {
+      or: [
+        {equals: [
+          {field: 'one'},
+          {field: 'two'}
+        ]},
+        {equals: [
+          {field: 'three'},
+          {value: 3}
+        ]}
+      ]
+    },
+    notCond: {
+      not: {equals: [
+        {field: 'four'},
+        {field: 'three'}
+      ]}
+    },
+    equalCond: {
+      equals: [
+        {field: 'five'},
+        {value: 'val'}
+      ]
+    },
+    mixedCond: {
+      or: [
+        {and: [
+          {not: {equals: [
+              {field: 'six'},
+              {value: 6}
+          ]}},
+          {equals: [
+            {field: 'seven'},
+            {value: 7}
+          ]}
+        ]},
+        {equals: [
+          {field: 'five'},
+          {value: 5}
+        ]}
+      ]
+    }
+  });
+  assert.deepEqual(fields, ['one', 'two', 'three', 'four', 'five', 'six', 'seven'])
+});
 
 addTest('Basic equal', () => {
   const out = evaluate(testResolver, {
