@@ -1,12 +1,10 @@
 const fs = require('fs');
 
 const Ajv = require('ajv');
-const yaml = require('js-yaml');
 
 const conditionEngine = require('./condition-engine');
 const searchEngine = require('./search-engine');
-
-const schemaCondition = yaml.safeLoad(fs.readFileSync('schema-condition.yml', 'utf8'));
+const schemaCondition = require('./schema-condition');
 
 const ajv = new Ajv();
 const conditionValidator = ajv.compile(schemaCondition);

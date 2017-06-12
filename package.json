@@ -9,7 +9,6 @@
   "author": "Jeremy Messenger",
   "license": "UNLICENSED",
   "dependencies": {
-    "ajv": "^5.1.5",
-    "js-yaml": "^3.8.4"
+    "ajv": "^5.1.5"
   }
 }
